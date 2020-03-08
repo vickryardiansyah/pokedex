@@ -148,7 +148,7 @@ const Common = {
       break
 
       default:
-        return 'account'
+        return 'flag-outline'
     }
   }
 }

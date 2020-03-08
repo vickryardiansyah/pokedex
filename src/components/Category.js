@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground } from
 
 const Category = (props) => {
   return (
-    <TouchableOpacity onPress={props.onPress} >
-      <View style={{ ...styles.category, backgroundColor: props.color ? props.color : '#CCC', overflow: 'hidden'}}>
+    <TouchableOpacity onPress={props.onPress} disabled={props.onPress ? false : true}>
+      <View style={{ ...styles.category, backgroundColor: props.color && props.onPress ? props.color : '#CCC', overflow: 'hidden'}}>
         <Image source={require('./../../assets/pokeball-white.png')} style={styles.pokeballTop} />
         <Image source={require('./../../assets/pokeball-white.png')} style={styles.pokeball} />
         <Text style={styles.title}>{props.children}</Text>

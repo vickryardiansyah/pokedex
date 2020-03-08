@@ -12,7 +12,7 @@ export default class Home extends React.Component {
       <Container>
         <Image source={require('./../../assets/pokeball-black.png')} style={styles.pokeball} />
         <Content style={{ padding: 15 }}>
-          <Text style={styles.title}>What Pokemon{'\n'}are you looking for?</Text>
+          <Text style={styles.title}>Explore fantastic{'\n'}pokédex</Text>
           <View style={styles.containerCategory} >
             <View style={styles.groupCategory} >
               <Category onPress={() => Navigation.navigate('Pokedex')} color="#4FC1A6">Pokedex</Category>
