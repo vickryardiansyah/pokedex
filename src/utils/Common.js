@@ -1,9 +1,28 @@
-import { padStart } from 'lodash'
+import { padStart, isObject } from 'lodash'
 
 const Common = {
   pokemonId: (id) => {
     return `#${padStart(id, 3, '0')}`
   },
+
+  pokemonTypes: [
+    'fire',
+    'water',
+    'poison',
+    'grass',
+    'electric',
+    'rock',
+    'dark',
+    'flying',
+    'dragon',
+    'bug',
+    'ground',
+    'psychic',
+    'fighting',
+    'ghost',
+    'ice',
+    'fairy',
+  ],
 
   getColor: (types) => {
     let substract = 1
@@ -12,11 +31,13 @@ const Common = {
       return "#4FC1A6"
     }
 
-    if (types.length > 1 && types[types.length - substract].type.name === 'normal') {
+    let typeName = isObject(types) ? types[types.length - substract].type.name : types
+
+    if (types.length > 1 && typeName === 'normal') {
       substract++
     }
 
-    switch (types[types.length - substract].type.name) {
+    switch (typeName) {
       case 'fire':
         return "#F7786B"
       break

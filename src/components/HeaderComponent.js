@@ -16,7 +16,7 @@ export default class HeaderComponent extends React.Component {
   }
 
   render() {
-    const { title, light } = this.props
+    const { title, light, customRight } = this.props
     const baseColor = light == true ? '#FFF' : '#3c414b'
     const pokeballColor = light == true ? require('./../../assets/pokeball-white.png') : require('./../../assets/pokeball-black.png')
     const pokeballOpacity = light == true ? 0.2 : 0.05
@@ -30,7 +30,11 @@ export default class HeaderComponent extends React.Component {
           </Button>
         </View>
 
-        { this.props.title && <Text style={{ ...styles.text, color: baseColor }}>{title}</Text> }
+        <View style={{ flexDirection: 'row', paddingHorizontal: 20, marginBottom: 10 }}>
+          { title && <Text style={{ ...styles.text, color: baseColor }}>{title}</Text> }
+          { customRight }
+        </View>
+
       </View>
     )
   }
@@ -43,7 +47,8 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'ios' ? 20 : 0,
   },
   headerContainer: {
-    paddingVertical: 10,
+    marginTop: 5,
+    paddingVertical: 5,
     paddingHorizontal: 5,
     flexDirection: 'row'
   },
@@ -51,14 +56,13 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     position: 'absolute',
-    top: -107,
+    top: -117,
     right: -50,
     zIndex: -1
   },
   text: {
     fontSize: 30,
     fontWeight: 'bold',
-    paddingHorizontal: 20,
-    marginBottom: 20
+    flex: 1
   },
 })

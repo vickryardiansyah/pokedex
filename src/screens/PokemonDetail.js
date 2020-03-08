@@ -95,7 +95,8 @@ export default class PokemonDetail extends React.Component {
 
           <View style={styles.body}>
             <Tabs transparent style={{ paddingTop: 0 }} tabBarActiveTextColor={'#3c414b'} tabBarInactiveTextColor={'#ced1d7'} tabBarUnderlineStyle={{ backgroundColor: '#7580d6' }}>
-              <Tab heading="About" tabStyle={{ backgroundColor: '#FFF' }} activeTabStyle={{ backgroundColor: '#FFF' }}>
+
+              <Tab heading="About" tabStyle={{ backgroundColor: '#FFF' }} activeTabStyle={{ backgroundColor: '#FFF' }} activeTextStyle={{ fontWeight: 'bold' }}>
                 <Content contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}>
                   <Text style={styles.title}>Description</Text>
                   <Text style={styles.description}>{Common.getDescriptionPokemon(specie.flavor_text_entries)}</Text>
@@ -113,7 +114,8 @@ export default class PokemonDetail extends React.Component {
                   </Card>
                 </Content>
               </Tab>
-              <Tab heading="Base Stats" tabStyle={{ backgroundColor: '#FFF' }} activeTabStyle={{ backgroundColor: '#FFF' }}>
+
+              <Tab heading="Base Stats" tabStyle={{ backgroundColor: '#FFF' }} activeTabStyle={{ backgroundColor: '#FFF' }} activeTextStyle={{ fontWeight: 'bold' }}>
                 <Content contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}>
                   <Text style={styles.title}>Stats</Text>
                   <FlatList
@@ -127,11 +129,13 @@ export default class PokemonDetail extends React.Component {
                   />
                 </Content>
               </Tab>
-              <Tab heading="Evolution" tabStyle={{ backgroundColor: '#FFF' }} activeTabStyle={{ backgroundColor: '#FFF' }}>
+
+              <Tab heading="Evolution" tabStyle={{ backgroundColor: '#FFF' }} activeTabStyle={{ backgroundColor: '#FFF' }} activeTextStyle={{ fontWeight: 'bold' }}>
                 <Content contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 15 }}>
                   { this.getEvlotuinChain() }
                 </Content>
               </Tab>
+
             </Tabs>
           </View>
         </View>
@@ -143,7 +147,7 @@ export default class PokemonDetail extends React.Component {
 
 const styles = StyleSheet.create({
   header: {
-    height: 300,
+    height: 285,
   },
   body: {
     backgroundColor: '#FFF',
