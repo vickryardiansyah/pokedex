@@ -17,10 +17,11 @@ import {
   Input,
   Text,
   Button,
-  Badge
+  Badge,
+  Picker
 } from 'native-base'
 
-import { capitalize } from 'lodash'
+import { capitalize, isObject } from 'lodash'
 import HeaderComponent from '../components/HeaderComponent'
 import ItemPokedex from "../components/ItemPokedex"
 import RBSheet from "react-native-raw-bottom-sheet"
@@ -36,7 +37,7 @@ export default class Pokedex extends React.Component {
       loading: false,
       offset: 0,
       size: 20,
-      count: 0
+      selectType: undefined
     }
   }
 
@@ -55,8 +56,7 @@ export default class Pokedex extends React.Component {
           this.setState({
             pokemons,
             loading: false,
-            offset: this.state.offset + this.state.size,
-            count: res.count
+            offset: this.state.offset + this.state.size
           })
         })
     }
@@ -76,6 +76,27 @@ export default class Pokedex extends React.Component {
     )
   }
 
+  selectType(value) {
+    this.setState({
+      selectType: value,
+      pokemons: []
+    })
+
+    if (value == 'all') {
+      this.loadMorePokemons()
+    } else {
+      this.setState({ loading: true })
+      fetch(`${Config.apiUrl}type/${value}`)
+        .then(res => res.json())
+        .then(res => {
+          this.setState({
+            pokemons: res.pokemon,
+            loading: false
+          })
+        })
+    }
+  }
+
   customRight = () => (
     <Button transparent onPress={() => this.RBSheet.open()}>
       <Icon name='ios-options' style={{ color: '#3c414b' }} />
@@ -91,27 +112,56 @@ export default class Pokedex extends React.Component {
 
     return (
       <Container>
-        <HeaderComponent title='Pokedex' customRight={this.customRight()} />
+        <HeaderComponent title='Pokedex' />
+        <Item picker style={{ paddingHorizontal: 15, paddingBottom: 10 }}>
+          <Picker
+            mode="dropdown"
+            iosIcon={<Icon name="arrow-down" />}
+            style={{ width: undefined }}
+            placeholder="Select your SIM"
+            placeholderStyle={{ color: "#bfc6ea" }}
+            placeholderIconColor="#007aff"
+            selectedValue={this.state.selectType}
+            onValueChange={this.selectType.bind(this)}
+          >
+            <Picker.Item label="All" value="all" />
+            {
+              Common.pokemonTypes.map((item, index) => {
+                return (<Picker.Item label={capitalize(item)} value={item} key={index} />) 
+              })
+            }
+          </Picker>
+        </Item>
         <Content contentContainerStyle={{ flex: 1 }}>
 
           <FlatList
             numColumns={2}
             data={pokemons}
             renderItem={({ item, index }) => {
+              let data = item
+              if (isObject(item.pokemon)) {
+                data = item.pokemon
+              }
               return (
                 <View style={{ flex: 1, marginLeft: (index % 2) * 10 }}>
-                  <ItemPokedex onPress={this.goToPokemonDetail.bind(this)} url={item.url} />
+                  <ItemPokedex onPress={this.goToPokemonDetail.bind(this)} url={data.url} />
                 </View>
               )
             }}
             contentContainerStyle={
               pokemons.length < 1 && { flex: 1, alignItems: "center" }
             }
-            keyExtractor={item => item.name}
+            keyExtractor={item => {
+              let data = item
+              if (isObject(item.pokemon)) {
+                data = item.pokemon
+              }
+              return data.name
+            }}
             onEndReached={this.loadMorePokemons}
             onEndReachedThreshold={0.4}
             ListFooterComponent={this.renderFooter.bind(this)}
-            style={{ paddingHorizontal: 15 }}
+            style={{ paddingHorizontal: 15, paddingTop: 15 }}
           />
 
           <RBSheet
